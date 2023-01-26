@@ -12,7 +12,7 @@ const PostBox = styled.div`
 	border-radius: 10px;
 	padding: 1rem;
 	width: 30rem;
-	max-width: 90vw;
+	max-width: 80vw;
 `;
 
 const Header = styled.div`
@@ -54,6 +54,9 @@ const PrImg = styled.img`
 	margin-bottom: 1rem;
 	max-height: 10rem;
 	object-fit: cover;
+	-webkit-mask-image:-webkit-gradient(linear, left top, left bottom, from(rgba(0,0,0,1)), to(rgba(0,0,0,0)));
+	mask-image: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0));
+  }
 `;
 
 const Tags = styled.div`

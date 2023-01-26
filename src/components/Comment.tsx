@@ -10,7 +10,7 @@ const CommentBox = styled.div`
 	border-radius: 10px;
 	padding: 1rem;
 	width: 30rem;
-	max-width: 90vw;
+	max-width: 80vw;
 `;
 
 const Header = styled.div`
