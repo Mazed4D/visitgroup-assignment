@@ -23,7 +23,7 @@ function App() {
 					<Route path='/create' element={<CreatePostPage />} />
 				</Routes>
 			</BrowserRouter>
-			<ReactQueryDevtools initialIsOpen={false} />
+			{/* <ReactQueryDevtools initialIsOpen={false} /> */}
 		</QueryClientProvider>
 	);
 }
