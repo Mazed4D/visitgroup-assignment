@@ -25,7 +25,7 @@ const Button = styled.button`
 `;
 
 const Home = () => {
-	const { data, fetchNextPage, isFetchingNextPage, hasNextPage } =
+	const { data, fetchNextPage, isFetchingNextPage, isLoading, hasNextPage } =
 		useInfiniteQuery('posts', getAllPosts, {
 			getNextPageParam: (lastPage, pages) => lastPage.page + 1,
 			keepPreviousData: true,
@@ -38,7 +38,7 @@ const Home = () => {
 					<PostPreview post={post} key={post.id} />
 				));
 			})}
-			{isFetchingNextPage && <Loader />}
+			{(isFetchingNextPage || isLoading) && <Loader />}
 			{!isFetchingNextPage && hasNextPage && (
 				<Button onClick={() => fetchNextPage()}>Load more</Button>
 			)}

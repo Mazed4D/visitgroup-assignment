@@ -1,7 +1,7 @@
 // Ideally the form should be rewritten using Formik to utilize validation
 
 import styled from 'styled-components';
-import { useMutation } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 
@@ -42,7 +42,15 @@ const Center = styled.div`
 	align-items:'center
 `;
 
-const Text = styled.input`
+const Text = styled.p`
+	background: #e0edc580;
+	border-radius: 10px;
+	padding: 1rem;
+	border: none;
+	margin-bottom: 1rem;
+`;
+
+const TextInput = styled.input`
 	background: #e0edc5;
 	border-radius: 10px;
 	padding: 1rem;
@@ -54,6 +62,9 @@ const PostForm = ({ post }: { post?: IPostResponse }) => {
 	const [text, setText] = useState(post?.text ?? '');
 	const [image, setImage] = useState(post?.image ?? '');
 	const [tags, setTags] = useState(post?.tags?.join(',') ?? '');
+	const [likes, setLikes] = useState(post?.likes ?? 0);
+	const queryClient = useQueryClient();
+
 	const navigate = useNavigate();
 
 	const mutation = useMutation(
@@ -64,7 +75,7 @@ const PostForm = ({ post }: { post?: IPostResponse }) => {
 							text,
 							image,
 							tags: tags.split(','),
-							likes: 0,
+							likes,
 						},
 						post?.id
 				  )
@@ -72,11 +83,14 @@ const PostForm = ({ post }: { post?: IPostResponse }) => {
 						text,
 						image,
 						tags: tags.split(','),
-						likes: 0,
+						likes,
 						owner: '60d0fe4f5311236168a10a1f',
 				  }),
 		{
-			onSuccess: (data) => navigate(`/${data.id}`),
+			onSuccess: (data) => {
+				queryClient.invalidateQueries('posts');
+				navigate(`/${data.id}`);
+			},
 		}
 	);
 
@@ -94,20 +108,27 @@ const PostForm = ({ post }: { post?: IPostResponse }) => {
 			)}
 			{!mutation.isLoading && (
 				<>
-					<Text
+					<TextInput
 						placeholder='Add the URL to your image here...'
 						value={image}
 						onChange={(e) => setImage(e.target.value)}
 					/>
-					<Text
+					<TextInput
 						placeholder='Type your post text here...'
 						value={text}
 						onChange={(e) => setText(e.target.value)}
 					/>
-					<Text
+					<TextInput
 						placeholder='Type your tags here, seperate them with a comma (dog,labrador)...'
 						value={tags}
 						onChange={(e) => setTags(e.target.value)}
+					/>
+					<Text>Number of likes:</Text>
+					<TextInput
+						value={likes}
+						onChange={(e) => setLikes(Number(e.target.value))}
+						type={'number'}
+						min={0}
 					/>
 					<Button onClick={handleSubmit} disabled={disabled}>
 						{post?.id ? 'Edit Post' : 'Add Post'}
