@@ -71,12 +71,14 @@ const Likes = styled.div`
 	justify-content: flex-end;
 	align-items: center;
 	padding-left: 1rem;
-	font-size: 1.5rem;
+	font-size: 1.2rem;
+	font-weight: bold;
 `;
 
 const Button = styled.button`
 	display: flex;
-	height: 100%;
+	width: 100%;
+	margin-top: 1rem;
 	justify-content: center;
 	align-items: center;
 	font-size: 1.1rem;
@@ -115,17 +117,17 @@ const PostContent = ({
 				<Likes>
 					<p>{post.likes} 👍</p>
 				</Likes>
-
-				{!preview && (
-					<Link to={`/${post.id}/edit`}>
-						<Button>Edit</Button>
-					</Link>
-				)}
 			</Header>
 			{!preview && <Img src={post.image} alt={post.text} />}
 			{preview && <PrImg src={post.image} alt={post.text} />}
 			<Text>{post.text}</Text>
 			<Tags>{tags}</Tags>
+
+			{!preview && (
+				<Link to={`/${post.id}/edit`}>
+					<Button>Edit</Button>
+				</Link>
+			)}
 		</PostBox>
 	);
 };
