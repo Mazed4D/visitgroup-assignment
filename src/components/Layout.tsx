@@ -10,6 +10,7 @@ const TitleBox = styled.div`
 	width: 100vw;
 	background: #f1f7ee;
 	border-radius: 0 0 10px 10px;
+	z-index: 2;
 `;
 
 const Title = styled.h1`
